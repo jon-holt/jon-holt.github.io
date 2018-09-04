@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Multinomial Regression on Uninformed Prior</title>
+    <link>/categories/multinomial-regression/</link>
+    <description>Recent content in Multinomial Regression on Uninformed Prior</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 29 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/multinomial-regression/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How do teachers describe their students?</title>
+      <link>/post/how-do-teachers-describe-their-students/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/how-do-teachers-describe-their-students/</guid>
+      <description>Introduction DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
+My student and I preparing for launch</description>
+    </item>
+    
+  </channel>
+</rss>

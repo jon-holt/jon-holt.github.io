@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>How do teachers describe their students? :: Uninformed Prior — Jon Holt&#39;s blog</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/how-do-teachers-describe-their-students/" />
+
+
+<link rel="stylesheet" href="/assets/style.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="/assets/style.css">
+
+
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="img/favicon.png">
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="How do teachers describe their students? :: Uninformed Prior — Jon Holt&#39;s blog" />
+<meta name="twitter:description" content="Introduction DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
+My student and I preparing for launch" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+<meta name="twitter:image" content="/img/default.jpg">
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How do teachers describe their students? :: Uninformed Prior — Jon Holt&#39;s blog">
+<meta property="og:description" content="" />
+<meta property="og:url" content="/post/how-do-teachers-describe-their-students/" />
+<meta property="og:site_name" content="How do teachers describe their students?" />
+<meta property="og:image" content="/img/default.jpg">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:section" content="NLP" /><meta property="article:section" content="multinomial regression" />
+<meta property="article:published_time" content="2018-08-29 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+</head>
+<body class="dark-theme">
+<div class="container">
+  <header class="header">
+  <span class="header__inner">
+    <a href="/" style="text-decoration: none;">
+  <div class="logo">
+    
+      <span class="logo__mark">></span>
+      <span class="logo__text">uninformed prior</span>
+      <span class="logo__cursor"></span>
+    
+  </div>
+</a>
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner">
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+</nav>
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>        
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="bulb-off" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="24" height="24"/>
+  <path d="M4 19C4 19.55 4.45 20 5 20H9C9.55 20 10 19.55 10 19V18H4V19ZM7 0C3.14 0 0 3.14 0 7C0 9.38 1.19 11.47 3 12.74V15C3 15.55 3.45 16 4 16H10C10.55 16 11 15.55 11 15V12.74C12.81 11.47 14 9.38 14 7C14 3.14 10.86 0 7 0ZM9.85 11.1L9 11.7V14H5V11.7L4.15 11.1C2.8 10.16 2 8.63 2 7C2 4.24 4.24 2 7 2C9.76 2 12 4.24 12 7C12 8.63 11.2 10.16 9.85 11.1Z" transform="translate(5 2)" fill="black"/>
+</svg>
+
+<svg class="bulb-on" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="24" height="24"/>
+  <path class="bulb-on__base" d="M4 19C4 19.55 4.45 20 5 20H9C9.55 20 10 19.55 10 19V18H4V19Z" transform="translate(5 2)" fill="#a9a9b3" />
+  <path class="bulb-on__glass" d="M0 7C0 3.14 3.14 0 7 0C10.86 0 14 3.14 14 7C14 9.38 12.81 11.47 11 12.74V15C11 15.55 10.55 16 10 16H4C3.45 16 3 15.55 3 15V12.74C1.19 11.47 0 9.38 0 7Z" transform="translate(5 2)" fill="#a9a9b3" />
+</svg>
+  
+      </span>
+    </span>
+  </span>
+</header>
+
+
+  <div class="content">
+    
+  <div class="post">
+    <h2 class="post-title"><a href="/post/how-do-teachers-describe-their-students/">How do teachers describe their students?</a></h2>
+    <div class="post-meta">
+      <span class="post-date">
+        2018-08-29
+      </span>
+      <span class="post-author">Written by Jon</span>
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      <div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:</p>
+<div class="figure">
+<img src="/images/Holt_Rocket.jpg" alt="My student and I preparing for launch" width="500" />
+<p class="caption">My student and I preparing for launch</p>
+</div>
+<p>Recently, DonorsChoose released a dataset of about 180,000 teacher applications for funding. This provides a great opportunity to have some fun with natural language processing (NLP) because, as part of the DonorsChoose application, teachers must submit essays about their students. I was curious to know if I could identify differences in the way Pre-K, elementary, middle, and high school teachers wrote about their students.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>The data for this project is hosted on <a href="https://www.kaggle.com/c/donorschoose-application-screening">Kaggle</a>, and was originally posted as a Kaggle competition. This analysis is unrelated to the competition.</p>
+<p>I already did some pre-processing of the data structure. Basically, I combined multiple essays from each individual teacher and put them into a single column. This way, each row represents a single teacher and each column represents the words that the teacher used to describe his or her students.</p>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<p>First, we load some useful packages.</p>
+<pre class="r"><code>library(tm)
+library(wordcloud)
+library(reshape2)
+library(dplyr)
+library(ggplot2)
+library(glmnet)</code></pre>
+<p>There are 4 grade categories: PreK-2, 3-5, 6-8, and 9-12. Let’s see how many essays we have from each category.</p>
+<pre class="r"><code>tmp &lt;- data.frame(table(df$project_grade_category))
+essay_histogram &lt;- ggplot(tmp, aes(x=Var1, y=Freq, fill=Var1)) + geom_bar(stat = &quot;identity&quot;) + xlab(&quot;&quot;) + ylab(&quot;number of essays&quot;) + theme(text = element_text(size=20)) + scale_fill_manual(values=c(&quot;orange&quot;, &quot;dark green&quot;, &quot;blue&quot;, &quot;red&quot;)) + guides(fill=FALSE)</code></pre>
+<div class="figure">
+<img src="/images/essay_histogram.jpg" alt="Distribution of teacher essays" width="500" />
+<p class="caption">Distribution of teacher essays</p>
+</div>
+<p>There is a big disparity in the numbers of essays across the grade categories. This will be a problem later on when we use these data in a multinomial regression, which requires balanced data. I’m going to ignore this issue here, but if this were a professional analysis then I would definitely need to resample a balanced dataset!</p>
+<p>Next, we will pre-process the text. Common steps include removing puncuation, upper-case letters, extra spaces, and stop words.</p>
+<pre class="r"><code># Create a volatile corpus
+docs.s &lt;- Corpus(VectorSource(df$project_essay_2))
+
+# remove line breaks
+line_break &lt;- function(x) gsub(&quot;\\\\r\\\\n&quot;, &quot; &quot;, x) 
+docs.s &lt;- tm_map(docs.s, line_break)
+
+# remove stop words
+docs.s &lt;- tm_map(docs.s, removeWords, stopwords(&quot;english&quot;))
+
+# remove upper-case
+docs.s &lt;- tm_map(docs.s, content_transformer(tolower))
+
+# remove punctuation
+docs.s &lt;- tm_map(docs.s, removePunctuation, preserve_intra_word_dashes = TRUE)
+
+# remove numbers
+docs.s &lt;- tm_map(docs.s, removeNumbers)
+
+# remove left over &quot;th&quot; from numbers
+docs.s &lt;- tm_map(docs.s, removeWords, c(&quot;th&quot;))
+
+# remove white Space
+docs.s &lt;- tm_map(docs.s, stripWhitespace)</code></pre>
+<p>What does the final product look like? Let’s look at the first essay:</p>
+<pre class="r"><code>docs.s[[1]]$content</code></pre>
+<pre><code>## [1] &quot;i currently differentiated sight word center daily literacy stations the students activities relate whatever sight word list this one favorite station activities i want continue provide students engaging ways practice sight words i dream students use qr readers scan sight words struggling ipods reading sight words this help many students giving multiple exposures words my students need someone can go sight words daily i always get around everyone practice flashcards with ipods still way practice sight words daily basis&quot;</code></pre>
+<p>It looks more like a student essay than a teacher essay…</p>
+<div class="figure">
+<img src="/images/Obama_Laugh.jpg" width="500" />
+
+</div>
+<p>Just kidding.</p>
+<p>Anyway… what are the most common words in the entire corpus? Let’s create a <a href="https://en.wikipedia.org/wiki/Document-term_matrix">document-term matrix</a> (DTM), which will give us the frequency of each word. A word cloud is a nice way to visualize the most common words.</p>
+<pre class="r"><code># create DTM
+dtm &lt;- DocumentTermMatrix(docs.s)
+
+# remove sparse terms
+dtm = removeSparseTerms(dtm, 0.99)
+
+# generate word cloud
+freq = data.frame(sort(colSums(as.matrix(dtm)), decreasing=TRUE))
+wordcloud(rownames(freq), freq[,1], max.words=40, colors=brewer.pal(1, &quot;Dark2&quot;))</code></pre>
+<div class="figure">
+<img src="/images/wordcloud.jpg" alt="word cloud" width="500" />
+<p class="caption">word cloud</p>
+</div>
+<p>Obviously, words like “students” are the most common. If we compared the different grade categories (PreK-2, 3-5, 6-8, 9-12) based on the most common words, then there wouldn’t be much of a difference! All teachers talk about “students” more than anything else.</p>
+<p>So, to get a more granular idea of word frequency across grade levels, we can calculate the <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">term frequency - inverse document frequency</a> (tf-idf) . The tf-idf is a statistic that captures the <em>importance</em> of the word in each document. If a word is super common in the entire corpus, and also common in a particular document, then the word gets a low tf-idf for that document. Conversely, if the word is rare in the whole corpus, but is common in a particular document, then it gets a high tf-idf for that document.</p>
+<p>Each word in each document gets its own tf-idf value, so we expect to obtain a matrix that has a dimension of teachers x words.</p>
+<pre class="r"><code># tf-idf
+dtm_tfidf &lt;- DocumentTermMatrix(docs.s, control = list(weighting = weightTfIdf))
+
+# remove sparse terms
+dtm_tfidf = removeSparseTerms(dtm_tfidf, 0.99)
+
+# generate word cloud
+freq = data.frame(sort(colSums(as.matrix(dtm_tfidf)), decreasing=TRUE))
+wordcloud(rownames(freq), freq[,1], max.words=50, colors=brewer.pal(1, &quot;Dark2&quot;))</code></pre>
+<p><img src="/images/wordcloud2.jpg" alt="word cloud" width="500" /> Slightly more interesting!</p>
+<div class="figure">
+<img src="/images/Clap.jpg" width="500" />
+
+</div>
+<p>Now, let’s do what we set out to do: compare words across grade levels. To accomplish this, we will train a multinomial regression model. The predictor matrix consists of our tf-idf values. The response vector is the grade level. We need to prepare the data and generate train and test sets.</p>
+<pre class="r"><code># convert if-idf DTM to matrix
+DF &lt;- as.matrix(dtm_tfidf)
+
+# convert grade levels to matrix of numerical factors
+target &lt;- as.matrix(as.factor(as.numeric(df$project_grade_category)))
+
+# split data into training and testing sets
+set.seed(123)
+smp_size &lt;- floor(0.75 * nrow(DF))
+train_ind &lt;- sample(seq_len(nrow(DF)), size = smp_size)
+
+train.x &lt;- DF[train_ind, ]
+train.y &lt;- target[train_ind,]
+test.x &lt;- DF[-train_ind, ]
+test.y &lt;- target[-train_ind,]</code></pre>
+<p>Now, we fit the model. The L-2 penalization (also called <a href="https://en.wikipedia.org/wiki/Tikhonov_regularization">ridge regression</a>) is useful here because it will reduce the dimensionality of the model and help to prevent over-fitting. We’ll use cross-validation to select the best L-2 penalization parameter, lambda.</p>
+<pre class="r"><code># fit model
+cvfit=cv.glmnet(train.x[1:500,], train.y[1:500], # I use only 500 rows here, so my computer doesn&#39;t blow up
+                family=&quot;multinomial&quot;, 
+                type.multinomial = &quot;grouped&quot;, 
+                type.measure = &quot;deviance&quot;) 
+
+# plot the penalization parameter against the deviance
+plot(cvfit)</code></pre>
+<div class="figure">
+<img src="/images/cvfit_essays.jpg" alt="finding the best lambda" width="500" />
+<p class="caption">finding the best lambda</p>
+</div>
+<p>It’s very important that the plot looks like a ski jump.</p>
+<div class="figure">
+<img src="/images/Ski_Jump.jpg" width="500" />
+
+</div>
+<p>Just kidding.</p>
+<p>Notice how the <a href="https://en.wikipedia.org/wiki/Deviance_(statistics)">deviance</a> is lowest at a log-lambda value of about -3. Lower deviance is better! So, we’re going to use that value (around -3) in our final model.</p>
+<p>The numbers at the top of the plot are the numbers of actual words that are being used in the model. In our case, we’ll use about 100 words (dotted line on the left between 74 and 168).</p>
+<p>Like any other model, we can use the “predict” function to predict values (grade level) based on new data (tf-idf).</p>
+<pre class="r"><code># predict grade level using test data set
+pred &lt;- predict(cvfit, newx = test.x[1:10,], s = &quot;lambda.min&quot;, type = &quot;class&quot;) # predict the first 10 rows of test set</code></pre>
+<p>But that’s not really what we’re interested in. We’re interested in the <em>model itself</em>. Specifically, we want to know how the model coefficients are different for each grade level. In other words, what are the relationships between tf-idf and grade level?</p>
+<p>Let’s extract the nuts and bolts of the model that we fitted.</p>
+<pre class="r"><code># extract coefficient values for optimal lambda
+tmp_coeffs &lt;- coef(cvfit, s = &quot;lambda.min&quot;)
+
+# extract names of words 
+words &lt;- dimnames(tmp_coeffs$`1`)[[1]]
+
+# extract coefficient values for each of the 4 grade levels
+elem &lt;- matrix(tmp_coeffs$`1`)[,1]
+middle &lt;- matrix(tmp_coeffs$`2`)[,1]
+high &lt;- matrix(tmp_coeffs$`3`)[,1]
+kinder &lt;- matrix(tmp_coeffs$`4`)[,1]
+
+# put it into a data frame
+coefs &lt;- data.frame(words, kinder, elem, middle, high)[-1,] # remove intercept</code></pre>
+<p>Now, let’s plot the words that are <em>most positively correlated</em> with each grade level.</p>
+<pre class="r"><code>tmp &lt;- melt(coefs)
+colnames(tmp) &lt;- c(&quot;words&quot;, &quot;grade&quot;, &quot;coefficient&quot;)
+
+p1 &lt;- tmp %&gt;% filter(grade==&quot;kinder&quot;) %&gt;% arrange(desc(coefficient)) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill =&quot;red&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades PreK-2&quot;)
+
+p2 &lt;- tmp %&gt;% filter(grade==&quot;elem&quot;) %&gt;% arrange(desc(coefficient)) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill=&quot;orange&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades 3-5&quot;)
+
+p3 &lt;- tmp %&gt;% filter(grade==&quot;middle&quot;) %&gt;% arrange(desc(coefficient)) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill = &quot;dark green&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades 6-8&quot;)
+
+p4 &lt;- tmp %&gt;% filter(grade==&quot;high&quot;) %&gt;% arrange(desc(coefficient)) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill=&quot;blue&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades 9-12&quot;)
+
+gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)</code></pre>
+<div class="figure">
+<img src="/images/essays_coef_plots.jpg" alt="positively correlated words" width="500" />
+<p class="caption">positively correlated words</p>
+</div>
+<p>We can see that “kindergarten” is the most telling word for… wait for it…</p>
+<div id="kindergarten-teachers" class="section level3">
+<h3>Kindergarten teachers!</h3>
+<p>“College” is the most telling word for high school teachers. Why not “high” or “school”? Well, remember that those are pretty common words in general, so they aren’t predictive of high school students specifically. I bet a lot of teachers talk about “high achievement”, for example. “College”, however, is more unique, and so if someone is talking about “college” in their essay, chances are it’s a high school teacher.</p>
+<p>What are the <em>most negatively correlated</em> words for each grade level?</p>
+<pre class="r"><code>tmp &lt;- melt(coefs)
+colnames(tmp) &lt;- c(&quot;words&quot;, &quot;grade&quot;, &quot;coefficient&quot;)
+
+p1 &lt;- tmp %&gt;% filter(grade==&quot;kinder&quot;) %&gt;% arrange(coefficient) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(-15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill =&quot;red&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades PreK-2&quot;)
+
+p2 &lt;- tmp %&gt;% filter(grade==&quot;elem&quot;) %&gt;% arrange(coefficient) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(-15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill=&quot;orange&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades 3-5&quot;)
+
+p3 &lt;- tmp %&gt;% filter(grade==&quot;middle&quot;) %&gt;% arrange(coefficient) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(-15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill = &quot;dark green&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades 6-8&quot;)
+
+p4 &lt;- tmp %&gt;% filter(grade==&quot;high&quot;) %&gt;% arrange(coefficient) %&gt;% mutate(words = factor(words, levels = rev(unique(words)))) %&gt;% top_n(-15) %&gt;% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill=&quot;blue&quot;) + labs(x = NULL, y = &quot;coef&quot;) + coord_flip() + ggtitle(&quot;Grades 9-12&quot;)
+
+gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)</code></pre>
+<div class="figure">
+<img src="/images/essays_coef_plots2.jpg" alt="negatively correlated words" width="500" />
+<p class="caption">negatively correlated words</p>
+</div>
+<p>Not surprisingly, we see some familiar words. For grades 6-8, “college” is negatively correlated. This makes sense because we already know that “college” is highly correlated to high school students (and not middle school students).</p>
+</div>
+</div>
+
+    </div>
+    
+  </div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" style="text-decoration: none;">
+  <div class="logo">
+    
+      <span class="logo__mark">></span>
+      <span class="logo__text">uninformed prior</span>
+      <span class="logo__cursor"></span>
+    
+  </div>
+</a>
+      <div class="copyright">
+        <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr">panr</a> 2018</span>
+      </div>
+    
+  </div>
+</footer>
+
+
+  <script src="/assets/main.js"></script>
+
+  <script src="/assets/prism.js"></script>
+
+
+
+  
+</div>
+
+</body>
+</html>

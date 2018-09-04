@@ -1,0 +1,291 @@
+---
+title: How do teachers describe their students?
+author: Jon
+date: '2018-08-29'
+slug: how-do-teachers-describe-their-students
+categories:
+  - NLP
+  - multinomial regression
+tags: []
+---
+
+```{r, echo=FALSE, eval=F}
+load("/Users/Jon/Documents/Duke/DonorsChoose/PreProcessedTrainSet_Essay12.Rda")
+load("/Users/Jon/Documents/Duke/DonorsChoose/data.Rda")
+```
+
+## Introduction
+
+DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here's a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
+
+![My student and I preparing for launch](/images/Holt_Rocket.jpg){width=500px}
+
+
+
+Recently, DonorsChoose released a dataset of about 180,000 teacher applications for funding. This provides a great opportunity to have some fun with natural language processing (NLP) because, as part of the DonorsChoose application, teachers must submit essays about their students. I was curious to know if I could identify differences in the way Pre-K, elementary, middle, and high school teachers wrote about their students. 
+
+## Data
+
+The data for this project is hosted on [Kaggle](https://www.kaggle.com/c/donorschoose-application-screening), and was originally posted as a Kaggle competition. This analysis is unrelated to the competition. 
+
+I already did some pre-processing of the data structure. Basically, I combined multiple essays from each individual teacher and put them into a single column. This way, each row represents a single teacher and each column represents the words that the teacher used to describe his or her students. 
+
+## Analysis
+
+First, we load some useful packages. 
+
+```{r, warning=FALSE, message=FALSE, eval=F}
+library(tm)
+library(wordcloud)
+library(reshape2)
+library(dplyr)
+library(ggplot2)
+library(glmnet)
+```
+
+There are 4 grade categories: PreK-2, 3-5, 6-8, and 9-12. Let's see how many essays we have from each category. 
+
+```{r, eval=F}
+tmp <- data.frame(table(df$project_grade_category))
+essay_histogram <- ggplot(tmp, aes(x=Var1, y=Freq, fill=Var1)) + geom_bar(stat = "identity") + xlab("") + ylab("number of essays") + theme(text = element_text(size=20)) + scale_fill_manual(values=c("orange", "dark green", "blue", "red")) + guides(fill=FALSE)
+```
+
+```{r, echo=F, eval=F}
+ggsave("/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/essay_histogram.jpg", essay_histogram)
+```
+
+![Distribution of teacher essays](/images/essay_histogram.jpg){width=500px}
+
+There is a big disparity in the numbers of essays across the grade categories. This will be a problem later on when we use these data in a multinomial regression, which requires balanced data. I'm going to ignore this issue here, but if this were a professional analysis then I would definitely need to resample a balanced dataset!
+
+Next, we will pre-process the text. Common steps include removing puncuation, upper-case letters, extra spaces, and stop words. 
+
+```{r, eval=F}
+# Create a volatile corpus
+docs.s <- Corpus(VectorSource(df$project_essay_2))
+
+# remove line breaks
+line_break <- function(x) gsub("\\\\r\\\\n", " ", x) 
+docs.s <- tm_map(docs.s, line_break)
+
+# remove stop words
+docs.s <- tm_map(docs.s, removeWords, stopwords("english"))
+
+# remove upper-case
+docs.s <- tm_map(docs.s, content_transformer(tolower))
+
+# remove punctuation
+docs.s <- tm_map(docs.s, removePunctuation, preserve_intra_word_dashes = TRUE)
+
+# remove numbers
+docs.s <- tm_map(docs.s, removeNumbers)
+
+# remove left over "th" from numbers
+docs.s <- tm_map(docs.s, removeWords, c("th"))
+
+# remove white Space
+docs.s <- tm_map(docs.s, stripWhitespace)
+```
+
+What does the final product look like? Let's look at the first essay:
+
+```{r, eval=F}
+docs.s[[1]]$content
+```
+
+```{r, echo=F}
+#save(essay_sample, file =  "/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/essay_sample")
+load("/Users/Jon/Documents/Blog/jon-holt.github.io/static/images/essay_sample")
+essay_sample
+```
+
+
+It looks more like a student essay than a teacher essay...
+
+![](/images/Obama_Laugh.jpg){width=500px}
+
+Just kidding. 
+
+Anyway... what are the most common words in the entire corpus? Let's create a [document-term matrix](https://en.wikipedia.org/wiki/Document-term_matrix) (DTM), which will give us the frequency of each word. A word cloud is a nice way to visualize the most common words. 
+
+```{r, message=F, warning=F, eval=F}
+# create DTM
+dtm <- DocumentTermMatrix(docs.s)
+
+# remove sparse terms
+dtm = removeSparseTerms(dtm, 0.99)
+
+# generate word cloud
+freq = data.frame(sort(colSums(as.matrix(dtm)), decreasing=TRUE))
+wordcloud(rownames(freq), freq[,1], max.words=40, colors=brewer.pal(1, "Dark2"))
+```
+
+```{r, echo=F, eval=F}
+jpeg("/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/wordcloud.jpg") 
+wordcloud <- wordcloud(rownames(freq), freq[,1], max.words=40, colors=brewer.pal(1, "Dark2"))
+dev.off() 
+```
+
+![word cloud](/images/wordcloud.jpg){width=500px}
+
+Obviously, words like "students" are the most common. If we compared the different grade categories (PreK-2, 3-5, 6-8, 9-12) based on the most common words, then there wouldn't be much of a difference! All teachers talk about "students" more than anything else. 
+
+So, to get a more granular idea of word frequency across grade levels, we can calculate the [term frequency - inverse document frequency](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) (tf-idf) . The tf-idf is a statistic that captures the *importance* of the word in each document. If a word is super common in the entire corpus, and also common in a particular document, then the word gets a low tf-idf for that document. Conversely, if the word is rare in the whole corpus, but is common in a particular document, then it gets a high tf-idf for that document. 
+
+Each word in each document gets its own tf-idf value, so we expect to obtain a matrix that has a dimension of teachers x words. 
+
+```{r, warning=F, message=F, eval=F}
+# tf-idf
+dtm_tfidf <- DocumentTermMatrix(docs.s, control = list(weighting = weightTfIdf))
+
+# remove sparse terms
+dtm_tfidf = removeSparseTerms(dtm_tfidf, 0.99)
+
+# generate word cloud
+freq = data.frame(sort(colSums(as.matrix(dtm_tfidf)), decreasing=TRUE))
+wordcloud(rownames(freq), freq[,1], max.words=50, colors=brewer.pal(1, "Dark2"))
+```
+
+```{r, echo=F, eval=F}
+jpeg("/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/wordcloud2.jpg") 
+wordcloud2 <- wordcloud(rownames(freq), freq[,1], max.words=40, colors=brewer.pal(1, "Dark2"))
+dev.off() 
+```
+
+![word cloud](/images/wordcloud2.jpg){width=500px}
+Slightly more interesting!
+
+![](/images/Clap.jpg){width=500px}
+
+Now, let's do what we set out to do: compare words across grade levels. To accomplish this, we will train a multinomial regression model. The predictor matrix consists of our tf-idf values. The response vector is the grade level. We need to prepare the data and generate train and test sets. 
+
+```{r, eval=F}
+# convert if-idf DTM to matrix
+DF <- as.matrix(dtm_tfidf)
+
+# convert grade levels to matrix of numerical factors
+target <- as.matrix(as.factor(as.numeric(df$project_grade_category)))
+
+# split data into training and testing sets
+set.seed(123)
+smp_size <- floor(0.75 * nrow(DF))
+train_ind <- sample(seq_len(nrow(DF)), size = smp_size)
+
+train.x <- DF[train_ind, ]
+train.y <- target[train_ind,]
+test.x <- DF[-train_ind, ]
+test.y <- target[-train_ind,]
+```
+
+Now, we fit the model. The L-2 penalization (also called [ridge regression](https://en.wikipedia.org/wiki/Tikhonov_regularization)) is useful here because it will reduce the dimensionality of the model and help to prevent over-fitting. We'll use cross-validation to select the best L-2 penalization parameter, lambda. 
+
+```{r, eval=F}
+# fit model
+cvfit=cv.glmnet(train.x[1:500,], train.y[1:500], # I use only 500 rows here, so my computer doesn't blow up
+                family="multinomial", 
+                type.multinomial = "grouped", 
+                type.measure = "deviance") 
+
+# plot the penalization parameter against the deviance
+plot(cvfit)
+```
+
+```{r, echo=F, eval=F}
+jpeg("/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/cvfit_essays.jpg") 
+cvfit_essays <- plot(cvfit)
+dev.off()
+```
+
+![finding the best lambda](/images/cvfit_essays.jpg){width=500px}
+
+It's very important that the plot looks like a ski jump.
+
+![](/images/Ski_Jump.jpg){width=500px}
+
+Just kidding. 
+
+Notice how the [deviance](https://en.wikipedia.org/wiki/Deviance_(statistics)) is lowest at a log-lambda value of about -3. Lower deviance is better! So, we're going to use that value (around -3) in our final model. 
+
+The numbers at the top of the plot are the numbers of actual words that are being used in the model. In our case, we'll use about 100 words (dotted line on the left between 74 and 168).
+
+Like any other model, we can use the "predict" function to predict values (grade level) based on new data (tf-idf).
+
+```{r, eval=F}
+# predict grade level using test data set
+pred <- predict(cvfit, newx = test.x[1:10,], s = "lambda.min", type = "class") # predict the first 10 rows of test set
+```
+
+But that's not really what we're interested in. We're interested in the *model itself*. Specifically, we want to know how the model coefficients are different for each grade level. In other words, what are the relationships between tf-idf and grade level?
+
+Let's extract the nuts and bolts of the model that we fitted.
+
+```{r, eval=F}
+# extract coefficient values for optimal lambda
+tmp_coeffs <- coef(cvfit, s = "lambda.min")
+
+# extract names of words 
+words <- dimnames(tmp_coeffs$`1`)[[1]]
+
+# extract coefficient values for each of the 4 grade levels
+elem <- matrix(tmp_coeffs$`1`)[,1]
+middle <- matrix(tmp_coeffs$`2`)[,1]
+high <- matrix(tmp_coeffs$`3`)[,1]
+kinder <- matrix(tmp_coeffs$`4`)[,1]
+
+# put it into a data frame
+coefs <- data.frame(words, kinder, elem, middle, high)[-1,] # remove intercept
+```
+
+Now, let's plot the words that are *most positively correlated* with each grade level.
+
+```{r, eval=F}
+tmp <- melt(coefs)
+colnames(tmp) <- c("words", "grade", "coefficient")
+
+p1 <- tmp %>% filter(grade=="kinder") %>% arrange(desc(coefficient)) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill ="red") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades PreK-2")
+
+p2 <- tmp %>% filter(grade=="elem") %>% arrange(desc(coefficient)) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill="orange") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades 3-5")
+
+p3 <- tmp %>% filter(grade=="middle") %>% arrange(desc(coefficient)) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill = "dark green") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades 6-8")
+
+p4 <- tmp %>% filter(grade=="high") %>% arrange(desc(coefficient)) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill="blue") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades 9-12")
+
+gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
+```
+
+```{r, echo=F, eval=F}
+essays_coef_plots <- gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
+ggsave(essays_coef_plots, filename = "/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/essays_coef_plots.jpg")
+```
+![positively correlated words](/images/essays_coef_plots.jpg){width=500px}
+
+We can see that "kindergarten" is the most telling word for... wait for it...
+
+###Kindergarten teachers!
+
+"College" is the most telling word for high school teachers. Why not "high" or "school"? Well, remember that those are pretty common words in general, so they aren't predictive of high school students specifically. I bet a lot of teachers talk about "high achievement", for example. "College", however, is more unique, and so if someone is talking about "college" in their essay, chances are it's a high school teacher. 
+
+What are the *most negatively correlated* words for each grade level?
+
+```{r, eval=F}
+tmp <- melt(coefs)
+colnames(tmp) <- c("words", "grade", "coefficient")
+
+p1 <- tmp %>% filter(grade=="kinder") %>% arrange(coefficient) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(-15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill ="red") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades PreK-2")
+
+p2 <- tmp %>% filter(grade=="elem") %>% arrange(coefficient) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(-15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill="orange") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades 3-5")
+
+p3 <- tmp %>% filter(grade=="middle") %>% arrange(coefficient) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(-15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill = "dark green") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades 6-8")
+
+p4 <- tmp %>% filter(grade=="high") %>% arrange(coefficient) %>% mutate(words = factor(words, levels = rev(unique(words)))) %>% top_n(-15) %>% ggplot(aes(words, coefficient, fill = grade)) + geom_col(show.legend = FALSE, fill="blue") + labs(x = NULL, y = "coef") + coord_flip() + ggtitle("Grades 9-12")
+
+gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
+```
+
+```{r, echo=F, eval=F}
+essays_coef_plots2 <- gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
+ggsave(essays_coef_plots2, filename = "/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/essays_coef_plots2.jpg")
+```
+![negatively correlated words](/images/essays_coef_plots2.jpg){width=500px}
+
+Not surprisingly, we see some familiar words. For grades 6-8, "college" is negatively correlated. This makes sense because we already know that "college" is highly correlated to high school students (and not middle school students). 
