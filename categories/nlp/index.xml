@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nlp on Uninformed Prior</title>
-    <link>https://jon-holt.github.io/categories/nlp/</link>
+    <link>/categories/nlp/</link>
     <description>Recent content in Nlp on Uninformed Prior</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://jon-holt.github.io/categories/nlp/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/nlp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Using pre-trained word embeddings for prediction</title>
-      <link>https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/</link>
+      <link>/post/using-word-embeddings-to-predict-donorschoose-acceptance/</link>
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/</guid>
+      <guid>/post/using-word-embeddings-to-predict-donorschoose-acceptance/</guid>
       <description>Introduction In my last post I introduced the DonorsChoose dataset, which can be easily downloaded from Kaggle. This dataset is fun to play with because it has lots of natural language processing (NLP) potential. Each observation contains (among other things) essays written by classroom teachers. Just like in my last post, we’ll focus on the essays here.
-Here, we’ll explore the teacher essays using word embeddings. Word embeddings are a mathematical representation of word similarity (e.</description>
+This time, we’ll explore the teacher essays using word embeddings. Word embeddings are a mathematical representation of word similarity (e.</description>
     </item>
     
     <item>
       <title>How do teachers describe their students?</title>
-      <link>https://jon-holt.github.io/post/how-do-teachers-describe-their-students/</link>
+      <link>/post/how-do-teachers-describe-their-students/</link>
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://jon-holt.github.io/post/how-do-teachers-describe-their-students/</guid>
-      <description>Introduction DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
+      <guid>/post/how-do-teachers-describe-their-students/</guid>
+      <description>Introduction DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 years old, and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
 My student and I preparing for launch</description>
     </item>
     

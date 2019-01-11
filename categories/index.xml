@@ -2,47 +2,47 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Uninformed Prior</title>
-    <link>https://jon-holt.github.io/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on Uninformed Prior</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://jon-holt.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Multinomial Regression</title>
-      <link>https://jon-holt.github.io/categories/multinomial-regression/</link>
+      <link>/categories/multinomial-regression/</link>
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://jon-holt.github.io/categories/multinomial-regression/</guid>
+      <guid>/categories/multinomial-regression/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nlp</title>
-      <link>https://jon-holt.github.io/categories/nlp/</link>
+      <link>/categories/nlp/</link>
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://jon-holt.github.io/categories/nlp/</guid>
+      <guid>/categories/nlp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://jon-holt.github.io/categories/r/</link>
+      <link>/categories/r/</link>
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://jon-holt.github.io/categories/r/</guid>
+      <guid>/categories/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Word Embeddings</title>
-      <link>https://jon-holt.github.io/categories/word-embeddings/</link>
+      <link>/categories/word-embeddings/</link>
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://jon-holt.github.io/categories/word-embeddings/</guid>
+      <guid>/categories/word-embeddings/</guid>
       <description></description>
     </item>
     

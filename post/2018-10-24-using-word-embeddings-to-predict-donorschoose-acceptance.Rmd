@@ -18,7 +18,7 @@ load("/Users/Jon/Documents/Duke/DonorsChoose/PreProcessedTrainSet_Essay12.Rda")
 
 In my last post I introduced the DonorsChoose dataset, which can be easily downloaded from [Kaggle](https://www.kaggle.com/c/donorschoose-application-screening). This dataset is fun to play with because it has lots of natural language processing (NLP) potential. Each observation contains (among other things) essays written by classroom teachers. Just like in my last post, we'll focus on the essays here. 
 
-Here, we'll explore the teacher essays using [word embeddings](https://en.wikipedia.org/wiki/Word_embedding). Word embeddings are a mathematical representation of word similarity (e.g. *dog* and *wolf* are similar; *dog* and *Paris* are not). Word embeddings can be created for any document or corpus, but are generally constructed from massive corpuses such as Wikipedia. 
+This time, we'll explore the teacher essays using [word embeddings](https://en.wikipedia.org/wiki/Word_embedding). Word embeddings are a mathematical representation of word similarity (e.g. *dog* and *wolf* are similar; *dog* and *Paris* are not similar). Word embeddings can be created for any document or corpus, but are generally constructed from massive corpuses such as Wikipedia. 
 
 The way word embeddings are created is actually pretty simple: First, you construct a square matrix where the dimension is equal to the number of unique words you have. Each entrance to the matrix is calculated as the number of times the word on one axis occurs with the word on the other axis, within a certain window. So if the window size is 5, then you look at 5 words at a time. The window slides along the entire corpus and you count up the frequency of each word inside the sliding window, relative to other words. Finally, you take your big matrix and do an eigenvalue decomposition, just like principal components analysis, or empirical orthogonal functions, or any other synonym for matrix decomposition. 
 
@@ -94,14 +94,13 @@ Next, let's load the pre-trained word vectors. These word vectors were trained o
     }
 ```
 
-I'll upload the 50-dimension vectors. They also have 100 and 200-dimension vectors. Loading the 50-dimension vectors takes about 2 and a half minutes on my Macbook. [Here's the link](https://nlp.stanford.edu/projects/glove/) to download the word vectors. 
+I'll upload the 50-dimension vectors. 50-dimension means that the words are projected into a 50-dimensional space, in which similar words are close to one another. It's impossible to visualize what 50 dimensions looks like (humans can only picture a 3-dimensional space), so you just have to use your imagination. In addition to the 50-dimension vectors, you can also obtain 100 and 200-dimension vectors. [Here's the link](https://nlp.stanford.edu/projects/glove/). Loading the 50-dimension vectors takes about 2 and a half minutes on my Macbook.
 
 ```{r, eval=F}
 # load pretrained glove
-g6b_50 <- scan(file = "/Users/Jon/Documents/Duke/DonorsChoose/glove.6B/glove.6B.50d.txt", what="", sep="\n")
+g6b_50 <- scan(file = "/glove.6B/glove.6B.50d.txt", what="", sep="\n")
 
 # call the function to convert the raw GloVe vector to data.frame (extra lines are for wall-time reporting)
-
 t_temp <- Sys.time()
 glove.50 <- proc_pretrained_vec(g6b_50)  # this is the actual function call
 (t_elap_temp <- paste0(round(as.numeric(Sys.time() - t_temp, units="mins"), digits = 2), " minutes"))
@@ -116,9 +115,9 @@ vec_pre <- t(glove.50)
 ff <- data.frame(names = row.names(vec_pre), vec_pre)
 ```
 
-Now we have our word vectors. What to these mean anyway? Let's look at the euclidean distane between some of the row vectors. For example, let's compare the distances between the following two pairs: "teacher" and "student"; and "teacher" and "mountain".
+Now we have our word vectors. There are 400,000 rows - one row for each unique word. There are 50 columns - one column for each dimension of the vector space. Let's look at the euclidean distane between some of the row vectors. For example, let's compare the distances between the following two pairs: "teacher" and "student"; and "teacher" and "mountain".
 
-What do we expect the difference will be? Well, the vectors are the locations of words in a latent space representative of word co-occurance. So, we expect that the distance between "teacher" and "student" will be less than the distance between "teacher" and "mountain". 
+What do we expect the difference will be? Well, the vectors are the locations of words in a vector space representative of word co-occurance (similarity). So, we expect that the distance between "teacher" and "student" will be less than the distance between "teacher" and "mountain". 
 
 ```{r, eval=F}
 teacher <- ff[ff$names=="teacher",2:51]
@@ -143,9 +142,11 @@ print("distance between teacher and mountain:")
 
 Cool! It looks like we're getting some meaningful information from the word vectors. 
 
-![](/images/Clap.jpg){width=500px}
+![](/images/Clap.jpg){width=0px}
 
-How might we make use of the word vectors for a real-life application? Well, the teacher essay dataset also has a column that specifies whether each teacher received funding for their classroom. We can run a regression model in which the word vectors are the predictors, and the classroom funding is the response. For this model to work, there are two underlying assumptions. First, we assume that teachers who write a "good" essay will get funding, and vice versa. Second, we assume that the word vectors will be able to capture the essence of a "good" essay. 
+How might we make use of the word vectors for a real-life application? 
+
+The teacher essay dataset also has a column that specifies whether each teacher received funding for their classroom. We can run a logistic regression model in which the word vectors are the predictors, and the classroom funding is the response. For this model to work, there are two underlying assumptions. First, we assume that teachers who write a "good" essay will get funding, while "bad"" essays will not get funding. Second, we assume that the word vectors will be able to capture the essence of a "good" essay. 
 
 Let's load up the glmnet package, which is great for running a quick lasso regression. How does the model do?
 
@@ -169,7 +170,7 @@ plot(glmnet_classifier)
 
 ![](/images/word_vectors_AUC.jpeg){width=750px}
 
-Hey, not bad! We got an AUC of almost 0.70 using the essays only. That means that (1) the quality of the teacher essays was captured by the word vectors and (2) the word vectors can accurately predict whether or not a teacher's essay was good enough to get funded. Pretty cool!
+Hey, not bad! We got an AUC of almost 0.70 using the essays alone. That means that (1) the quality of the teacher essays was captured by the word vectors and (2) the word vectors can accurately predict whether or not a teacher's essay was good enough to get funded. Pretty cool!
 
 ![](/images/sweet.jpg){width=750px}
 

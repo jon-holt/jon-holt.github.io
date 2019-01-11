@@ -9,7 +9,7 @@
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <meta name="robots" content="noodp"/>
-<link rel="canonical" href="https://jon-holt.github.io/post/how-do-teachers-describe-their-students/" />
+<link rel="canonical" href="/post/how-do-teachers-describe-their-students/" />
 
 
 <link rel="stylesheet" href="/assets/style.css">
@@ -26,20 +26,20 @@
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="How do teachers describe their students? :: Uninformed Prior — Jon Holt&#39;s blog" />
-<meta name="twitter:description" content="Introduction DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
+<meta name="twitter:description" content="Introduction DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 years old, and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
 My student and I preparing for launch" />
 <meta name="twitter:site" content="" />
 <meta name="twitter:creator" content="" />
-<meta name="twitter:image" content="https://jon-holt.github.io/img/default.jpg">
+<meta name="twitter:image" content="/img/default.jpg">
 
 
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="How do teachers describe their students? :: Uninformed Prior — Jon Holt&#39;s blog">
 <meta property="og:description" content="" />
-<meta property="og:url" content="https://jon-holt.github.io/post/how-do-teachers-describe-their-students/" />
+<meta property="og:url" content="/post/how-do-teachers-describe-their-students/" />
 <meta property="og:site_name" content="How do teachers describe their students?" />
-<meta property="og:image" content="https://jon-holt.github.io/img/default.jpg">
+<meta property="og:image" content="/img/default.jpg">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 <meta property="article:section" content="NLP" /><meta property="article:section" content="multinomial regression" /><meta property="article:section" content="R" />
@@ -56,7 +56,7 @@ My student and I preparing for launch" />
 <div class="container">
   <header class="header">
   <span class="header__inner">
-    <a href="https://jon-holt.github.io/" style="text-decoration: none;">
+    <a href="/" style="text-decoration: none;">
   <div class="logo">
     
       <span class="logo__mark">></span>
@@ -102,7 +102,7 @@ My student and I preparing for launch" />
   <div class="content">
     
   <div class="post">
-    <h2 class="post-title"><a href="https://jon-holt.github.io/post/how-do-teachers-describe-their-students/">How do teachers describe their students?</a></h2>
+    <h2 class="post-title"><a href="/post/how-do-teachers-describe-their-students/">How do teachers describe their students?</a></h2>
     <div class="post-meta">
       <span class="post-date">
         2018-08-29
@@ -117,17 +117,17 @@ My student and I preparing for launch" />
     <div class="post-content">
       <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:</p>
+<p>DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 years old, and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:</p>
 <div class="figure">
-<img src="/images/Holt_Rocket.jpg" alt="My student and I preparing for launch" width="500" />
+<img src="/images/Holt_Rocket.jpg" alt="My student and I preparing for launch" width="750" />
 <p class="caption">My student and I preparing for launch</p>
 </div>
-<p>Recently, DonorsChoose released a dataset of about 180,000 teacher applications for funding. This provides a great opportunity to have some fun with natural language processing (NLP) because, as part of the DonorsChoose application, teachers must submit essays about their students. I was curious to know if I could identify differences in the way Pre-K, elementary, middle, and high school teachers wrote about their students.</p>
+<p>Recently, DonorsChoose released a dataset of about 180,000 teacher applications for funding. This dataset provides a great opportunity to have some fun with natural language processing (NLP) because, as part of the DonorsChoose application, teachers must submit essays about their students. I was curious to know if I could identify differences in the way Pre-K, elementary, middle, and high school teachers wrote about their students.</p>
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>The data for this project is hosted on <a href="https://www.kaggle.com/c/donorschoose-application-screening">Kaggle</a>, and was originally posted as a Kaggle competition. This analysis is unrelated to the competition.</p>
-<p>I already did some pre-processing of the data structure. Basically, I combined multiple essays from each individual teacher and put them into a single column. This way, each row represents a single teacher and each column represents the words that the teacher used to describe his or her students.</p>
+<p>I already did some pre-processing of the data structure. Essentially, I combined multiple essays from each individual teacher and put them into a single column. This way, each row represents a single teacher and each column represents the words that the teacher used to describe his or her students.</p>
 </div>
 <div id="analysis" class="section level2">
 <h2>Analysis</h2>
@@ -142,7 +142,7 @@ library(glmnet)</code></pre>
 <pre class="r"><code>tmp &lt;- data.frame(table(df$project_grade_category))
 essay_histogram &lt;- ggplot(tmp, aes(x=Var1, y=Freq, fill=Var1)) + geom_bar(stat = &quot;identity&quot;) + xlab(&quot;&quot;) + ylab(&quot;number of essays&quot;) + theme(text = element_text(size=20)) + scale_fill_manual(values=c(&quot;orange&quot;, &quot;dark green&quot;, &quot;blue&quot;, &quot;red&quot;)) + guides(fill=FALSE)</code></pre>
 <div class="figure">
-<img src="/images/essay_histogram.jpg" alt="Distribution of teacher essays" width="500" />
+<img src="/images/essay_histogram.jpg" alt="Distribution of teacher essays" width="750" />
 <p class="caption">Distribution of teacher essays</p>
 </div>
 <p>There is a big disparity in the numbers of essays across the grade categories. This will be a problem later on when we use these data in a multinomial regression, which requires balanced data. I’m going to ignore this issue here, but if this were a professional analysis then I would definitely need to resample a balanced dataset!</p>
@@ -176,7 +176,7 @@ docs.s &lt;- tm_map(docs.s, stripWhitespace)</code></pre>
 <pre><code>## [1] &quot;i currently differentiated sight word center daily literacy stations the students activities relate whatever sight word list this one favorite station activities i want continue provide students engaging ways practice sight words i dream students use qr readers scan sight words struggling ipods reading sight words this help many students giving multiple exposures words my students need someone can go sight words daily i always get around everyone practice flashcards with ipods still way practice sight words daily basis&quot;</code></pre>
 <p>It looks more like a student essay than a teacher essay…</p>
 <div class="figure">
-<img src="/images/Obama_Laugh.jpg" width="500" />
+<img src="/images/Obama_Laugh.jpg" width="750" />
 
 </div>
 <p>Just kidding.</p>
@@ -191,7 +191,7 @@ dtm = removeSparseTerms(dtm, 0.99)
 freq = data.frame(sort(colSums(as.matrix(dtm)), decreasing=TRUE))
 wordcloud(rownames(freq), freq[,1], max.words=40, colors=brewer.pal(1, &quot;Dark2&quot;))</code></pre>
 <div class="figure">
-<img src="/images/wordcloud.jpg" alt="word cloud" width="500" />
+<img src="/images/wordcloud.jpg" alt="word cloud" width="750" />
 <p class="caption">word cloud</p>
 </div>
 <p>Obviously, words like “students” are the most common. If we compared the different grade categories (PreK-2, 3-5, 6-8, 9-12) based on the most common words, then there wouldn’t be much of a difference! All teachers talk about “students” more than anything else.</p>
@@ -206,9 +206,9 @@ dtm_tfidf = removeSparseTerms(dtm_tfidf, 0.99)
 # generate word cloud
 freq = data.frame(sort(colSums(as.matrix(dtm_tfidf)), decreasing=TRUE))
 wordcloud(rownames(freq), freq[,1], max.words=50, colors=brewer.pal(1, &quot;Dark2&quot;))</code></pre>
-<p><img src="/images/wordcloud2.jpg" alt="word cloud" width="500" /> Slightly more interesting!</p>
+<p><img src="/images/wordcloud2.jpg" alt="word cloud" width="750" /> Slightly more interesting!</p>
 <div class="figure">
-<img src="/images/Clap.jpg" width="500" />
+<img src="/images/Clap.jpg" width="750" />
 
 </div>
 <p>Now, let’s do what we set out to do: compare words across grade levels. To accomplish this, we will train a multinomial regression model. The predictor matrix consists of our tf-idf values. The response vector is the grade level. We need to prepare the data and generate train and test sets.</p>
@@ -237,12 +237,12 @@ cvfit=cv.glmnet(train.x[1:500,], train.y[1:500], # I use only 500 rows here, so 
 # plot the penalization parameter against the deviance
 plot(cvfit)</code></pre>
 <div class="figure">
-<img src="/images/cvfit_essays.jpg" alt="finding the best lambda" width="500" />
+<img src="/images/cvfit_essays.jpg" alt="finding the best lambda" width="750" />
 <p class="caption">finding the best lambda</p>
 </div>
 <p>It’s very important that the plot looks like a ski jump.</p>
 <div class="figure">
-<img src="/images/Ski_Jump.jpg" width="500" />
+<img src="/images/Ski_Jump.jpg" width="750" />
 
 </div>
 <p>Just kidding.</p>
@@ -281,7 +281,7 @@ p4 &lt;- tmp %&gt;% filter(grade==&quot;high&quot;) %&gt;% arrange(desc(coeffici
 
 gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)</code></pre>
 <div class="figure">
-<img src="/images/essays_coef_plots.jpg" alt="positively correlated words" width="500" />
+<img src="/images/essays_coef_plots.jpg" alt="positively correlated words" width="750" />
 <p class="caption">positively correlated words</p>
 </div>
 <p>We can see that “kindergarten” is the most telling word for… wait for it…</p>
@@ -302,7 +302,7 @@ p4 &lt;- tmp %&gt;% filter(grade==&quot;high&quot;) %&gt;% arrange(coefficient) 
 
 gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)</code></pre>
 <div class="figure">
-<img src="/images/essays_coef_plots2.jpg" alt="negatively correlated words" width="500" />
+<img src="/images/essays_coef_plots2.jpg" alt="negatively correlated words" width="750" />
 <p class="caption">negatively correlated words</p>
 </div>
 <p>Not surprisingly, we see some familiar words. For grades 6-8, “college” is negatively correlated. This makes sense because we already know that “college” is highly correlated to high school students (and not middle school students).</p>
@@ -318,7 +318,7 @@ gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)</code></pre>
         </div>
         <div class="pagination__buttons">
           
-            <a class="btn next" href="https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/">← Using pre-trained word embeddings for prediction</a>
+            <a class="btn next" href="/post/using-word-embeddings-to-predict-donorschoose-acceptance/">← Using pre-trained word embeddings for prediction</a>
           
            
         </div>
@@ -332,7 +332,7 @@ gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)</code></pre>
     <footer class="footer">
   <div class="footer__inner">
     
-      <a href="https://jon-holt.github.io/" style="text-decoration: none;">
+      <a href="/" style="text-decoration: none;">
   <div class="logo">
     
       <span class="logo__mark">></span>

@@ -17,19 +17,19 @@ load("/Users/Jon/Documents/Duke/DonorsChoose/data.Rda")
 
 ## Introduction
 
-DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here's a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
+DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 years old, and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here's a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
 
-![My student and I preparing for launch](/images/Holt_Rocket.jpg){width=500px}
+![My student and I preparing for launch](/images/Holt_Rocket.jpg){width=750px}
 
 
 
-Recently, DonorsChoose released a dataset of about 180,000 teacher applications for funding. This provides a great opportunity to have some fun with natural language processing (NLP) because, as part of the DonorsChoose application, teachers must submit essays about their students. I was curious to know if I could identify differences in the way Pre-K, elementary, middle, and high school teachers wrote about their students. 
+Recently, DonorsChoose released a dataset of about 180,000 teacher applications for funding. This dataset provides a great opportunity to have some fun with natural language processing (NLP) because, as part of the DonorsChoose application, teachers must submit essays about their students. I was curious to know if I could identify differences in the way Pre-K, elementary, middle, and high school teachers wrote about their students. 
 
 ## Data
 
 The data for this project is hosted on [Kaggle](https://www.kaggle.com/c/donorschoose-application-screening), and was originally posted as a Kaggle competition. This analysis is unrelated to the competition. 
 
-I already did some pre-processing of the data structure. Basically, I combined multiple essays from each individual teacher and put them into a single column. This way, each row represents a single teacher and each column represents the words that the teacher used to describe his or her students. 
+I already did some pre-processing of the data structure. Essentially, I combined multiple essays from each individual teacher and put them into a single column. This way, each row represents a single teacher and each column represents the words that the teacher used to describe his or her students. 
 
 ## Analysis
 
@@ -55,7 +55,7 @@ essay_histogram <- ggplot(tmp, aes(x=Var1, y=Freq, fill=Var1)) + geom_bar(stat =
 ggsave("/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/essay_histogram.jpg", essay_histogram)
 ```
 
-![Distribution of teacher essays](/images/essay_histogram.jpg){width=500px}
+![Distribution of teacher essays](/images/essay_histogram.jpg){width=750px}
 
 There is a big disparity in the numbers of essays across the grade categories. This will be a problem later on when we use these data in a multinomial regression, which requires balanced data. I'm going to ignore this issue here, but if this were a professional analysis then I would definitely need to resample a balanced dataset!
 
@@ -103,7 +103,7 @@ essay_sample
 
 It looks more like a student essay than a teacher essay...
 
-![](/images/Obama_Laugh.jpg){width=500px}
+![](/images/Obama_Laugh.jpg){width=750px}
 
 Just kidding. 
 
@@ -127,7 +127,7 @@ wordcloud <- wordcloud(rownames(freq), freq[,1], max.words=40, colors=brewer.pal
 dev.off() 
 ```
 
-![word cloud](/images/wordcloud.jpg){width=500px}
+![word cloud](/images/wordcloud.jpg){width=750px}
 
 Obviously, words like "students" are the most common. If we compared the different grade categories (PreK-2, 3-5, 6-8, 9-12) based on the most common words, then there wouldn't be much of a difference! All teachers talk about "students" more than anything else. 
 
@@ -153,10 +153,10 @@ wordcloud2 <- wordcloud(rownames(freq), freq[,1], max.words=40, colors=brewer.pa
 dev.off() 
 ```
 
-![word cloud](/images/wordcloud2.jpg){width=500px}
+![word cloud](/images/wordcloud2.jpg){width=750px}
 Slightly more interesting!
 
-![](/images/Clap.jpg){width=500px}
+![](/images/Clap.jpg){width=750px}
 
 Now, let's do what we set out to do: compare words across grade levels. To accomplish this, we will train a multinomial regression model. The predictor matrix consists of our tf-idf values. The response vector is the grade level. We need to prepare the data and generate train and test sets. 
 
@@ -197,11 +197,11 @@ cvfit_essays <- plot(cvfit)
 dev.off()
 ```
 
-![finding the best lambda](/images/cvfit_essays.jpg){width=500px}
+![finding the best lambda](/images/cvfit_essays.jpg){width=750px}
 
 It's very important that the plot looks like a ski jump.
 
-![](/images/Ski_Jump.jpg){width=500px}
+![](/images/Ski_Jump.jpg){width=750px}
 
 Just kidding. 
 
@@ -258,7 +258,7 @@ gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
 essays_coef_plots <- gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
 ggsave(essays_coef_plots, filename = "/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/essays_coef_plots.jpg")
 ```
-![positively correlated words](/images/essays_coef_plots.jpg){width=500px}
+![positively correlated words](/images/essays_coef_plots.jpg){width=750px}
 
 We can see that "kindergarten" is the most telling word for... wait for it...
 
@@ -287,6 +287,6 @@ gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
 essays_coef_plots2 <- gridExtra::grid.arrange(p1, p2, p3, p4, nrow=2)
 ggsave(essays_coef_plots2, filename = "/Users/Jon/Documents/Blog/jon-holt.github.io/content/img/essays_coef_plots2.jpg")
 ```
-![negatively correlated words](/images/essays_coef_plots2.jpg){width=500px}
+![negatively correlated words](/images/essays_coef_plots2.jpg){width=750px}
 
 Not surprisingly, we see some familiar words. For grades 6-8, "college" is negatively correlated. This makes sense because we already know that "college" is highly correlated to high school students (and not middle school students). 

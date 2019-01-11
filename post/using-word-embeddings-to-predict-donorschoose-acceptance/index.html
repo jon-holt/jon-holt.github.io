@@ -9,7 +9,7 @@
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 <meta name="robots" content="noodp"/>
-<link rel="canonical" href="https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/" />
+<link rel="canonical" href="/post/using-word-embeddings-to-predict-donorschoose-acceptance/" />
 
 
 <link rel="stylesheet" href="/assets/style.css">
@@ -27,19 +27,19 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Using pre-trained word embeddings for prediction :: Uninformed Prior — Jon Holt&#39;s blog" />
 <meta name="twitter:description" content="Introduction In my last post I introduced the DonorsChoose dataset, which can be easily downloaded from Kaggle. This dataset is fun to play with because it has lots of natural language processing (NLP) potential. Each observation contains (among other things) essays written by classroom teachers. Just like in my last post, we’ll focus on the essays here.
-Here, we’ll explore the teacher essays using word embeddings. Word embeddings are a mathematical representation of word similarity (e." />
+This time, we’ll explore the teacher essays using word embeddings. Word embeddings are a mathematical representation of word similarity (e." />
 <meta name="twitter:site" content="" />
 <meta name="twitter:creator" content="" />
-<meta name="twitter:image" content="https://jon-holt.github.io/img/default.jpg">
+<meta name="twitter:image" content="/img/default.jpg">
 
 
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Using pre-trained word embeddings for prediction :: Uninformed Prior — Jon Holt&#39;s blog">
 <meta property="og:description" content="" />
-<meta property="og:url" content="https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/" />
+<meta property="og:url" content="/post/using-word-embeddings-to-predict-donorschoose-acceptance/" />
 <meta property="og:site_name" content="Using pre-trained word embeddings for prediction" />
-<meta property="og:image" content="https://jon-holt.github.io/img/default.jpg">
+<meta property="og:image" content="/img/default.jpg">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
 <meta property="article:section" content="NLP" /><meta property="article:section" content="word embeddings" /><meta property="article:section" content="R" />
@@ -56,7 +56,7 @@ Here, we’ll explore the teacher essays using word embeddings. Word embeddings 
 <div class="container">
   <header class="header">
   <span class="header__inner">
-    <a href="https://jon-holt.github.io/" style="text-decoration: none;">
+    <a href="/" style="text-decoration: none;">
   <div class="logo">
     
       <span class="logo__mark">></span>
@@ -102,7 +102,7 @@ Here, we’ll explore the teacher essays using word embeddings. Word embeddings 
   <div class="content">
     
   <div class="post">
-    <h2 class="post-title"><a href="https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/">Using pre-trained word embeddings for prediction</a></h2>
+    <h2 class="post-title"><a href="/post/using-word-embeddings-to-predict-donorschoose-acceptance/">Using pre-trained word embeddings for prediction</a></h2>
     <div class="post-meta">
       <span class="post-date">
         2018-10-24
@@ -118,7 +118,7 @@ Here, we’ll explore the teacher essays using word embeddings. Word embeddings 
       <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>In my last post I introduced the DonorsChoose dataset, which can be easily downloaded from <a href="https://www.kaggle.com/c/donorschoose-application-screening">Kaggle</a>. This dataset is fun to play with because it has lots of natural language processing (NLP) potential. Each observation contains (among other things) essays written by classroom teachers. Just like in my last post, we’ll focus on the essays here.</p>
-<p>Here, we’ll explore the teacher essays using <a href="https://en.wikipedia.org/wiki/Word_embedding">word embeddings</a>. Word embeddings are a mathematical representation of word similarity (e.g. <em>dog</em> and <em>wolf</em> are similar; <em>dog</em> and <em>Paris</em> are not). Word embeddings can be created for any document or corpus, but are generally constructed from massive corpuses such as Wikipedia.</p>
+<p>This time, we’ll explore the teacher essays using <a href="https://en.wikipedia.org/wiki/Word_embedding">word embeddings</a>. Word embeddings are a mathematical representation of word similarity (e.g. <em>dog</em> and <em>wolf</em> are similar; <em>dog</em> and <em>Paris</em> are not similar). Word embeddings can be created for any document or corpus, but are generally constructed from massive corpuses such as Wikipedia.</p>
 <p>The way word embeddings are created is actually pretty simple: First, you construct a square matrix where the dimension is equal to the number of unique words you have. Each entrance to the matrix is calculated as the number of times the word on one axis occurs with the word on the other axis, within a certain window. So if the window size is 5, then you look at 5 words at a time. The window slides along the entire corpus and you count up the frequency of each word inside the sliding window, relative to other words. Finally, you take your big matrix and do an eigenvalue decomposition, just like principal components analysis, or empirical orthogonal functions, or any other synonym for matrix decomposition.</p>
 <p>If you didn’t follow along with all that, just know this: word embeddings represent words in some mathematical vector space, in which similar words are close to one another in the vector space.</p>
 <div class="figure">
@@ -182,12 +182,11 @@ docs.s &lt;- tm_map(docs.s, stripWhitespace)</code></pre>
 
         return(glove)
     }</code></pre>
-<p>I’ll upload the 50-dimension vectors. They also have 100 and 200-dimension vectors. Loading the 50-dimension vectors takes about 2 and a half minutes on my Macbook. <a href="https://nlp.stanford.edu/projects/glove/">Here’s the link</a> to download the word vectors.</p>
+<p>I’ll upload the 50-dimension vectors. 50-dimension means that the words are projected into a 50-dimensional space, in which similar words are close to one another. It’s impossible to visualize what 50 dimensions looks like (humans can only picture a 3-dimensional space), so you just have to use your imagination. In addition to the 50-dimension vectors, you can also obtain 100 and 200-dimension vectors. <a href="https://nlp.stanford.edu/projects/glove/">Here’s the link</a>. Loading the 50-dimension vectors takes about 2 and a half minutes on my Macbook.</p>
 <pre class="r"><code># load pretrained glove
-g6b_50 &lt;- scan(file = &quot;/Users/Jon/Documents/Duke/DonorsChoose/glove.6B/glove.6B.50d.txt&quot;, what=&quot;&quot;, sep=&quot;\n&quot;)
+g6b_50 &lt;- scan(file = &quot;/glove.6B/glove.6B.50d.txt&quot;, what=&quot;&quot;, sep=&quot;\n&quot;)
 
 # call the function to convert the raw GloVe vector to data.frame (extra lines are for wall-time reporting)
-
 t_temp &lt;- Sys.time()
 glove.50 &lt;- proc_pretrained_vec(g6b_50)  # this is the actual function call
 (t_elap_temp &lt;- paste0(round(as.numeric(Sys.time() - t_temp, units=&quot;mins&quot;), digits = 2), &quot; minutes&quot;))
@@ -196,8 +195,8 @@ print(dim(glove.50))</code></pre>
 <p>Oops, looks like the rows are the word vectors and the columns are the words. I think it’s more intuitive to have it the other way around, so let’s transpose the matrix. We’ll also make it a dataframe.</p>
 <pre class="r"><code>vec_pre &lt;- t(glove.50)
 ff &lt;- data.frame(names = row.names(vec_pre), vec_pre)</code></pre>
-<p>Now we have our word vectors. What to these mean anyway? Let’s look at the euclidean distane between some of the row vectors. For example, let’s compare the distances between the following two pairs: “teacher” and “student”; and “teacher” and “mountain”.</p>
-<p>What do we expect the difference will be? Well, the vectors are the locations of words in a latent space representative of word co-occurance. So, we expect that the distance between “teacher” and “student” will be less than the distance between “teacher” and “mountain”.</p>
+<p>Now we have our word vectors. There are 400,000 rows - one row for each unique word. There are 50 columns - one column for each dimension of the vector space. Let’s look at the euclidean distane between some of the row vectors. For example, let’s compare the distances between the following two pairs: “teacher” and “student”; and “teacher” and “mountain”.</p>
+<p>What do we expect the difference will be? Well, the vectors are the locations of words in a vector space representative of word co-occurance (similarity). So, we expect that the distance between “teacher” and “student” will be less than the distance between “teacher” and “mountain”.</p>
 <pre class="r"><code>teacher &lt;- ff[ff$names==&quot;teacher&quot;,2:51]
 student &lt;- ff[ff$names==&quot;student&quot;,2:51]
 mountain &lt;- ff[ff$names==&quot;mountain&quot;,2:51]
@@ -215,10 +214,11 @@ sqrt(sum((teacher-mountain)^2))</code></pre>
 <pre><code>## [1] 6.62</code></pre>
 <p>Cool! It looks like we’re getting some meaningful information from the word vectors.</p>
 <div class="figure">
-<img src="/images/Clap.jpg" width="500" />
+<img src="/images/Clap.jpg" width="0" />
 
 </div>
-<p>How might we make use of the word vectors for a real-life application? Well, the teacher essay dataset also has a column that specifies whether each teacher received funding for their classroom. We can run a regression model in which the word vectors are the predictors, and the classroom funding is the response. For this model to work, there are two underlying assumptions. First, we assume that teachers who write a “good” essay will get funding, and vice versa. Second, we assume that the word vectors will be able to capture the essence of a “good” essay.</p>
+<p>How might we make use of the word vectors for a real-life application?</p>
+<p>The teacher essay dataset also has a column that specifies whether each teacher received funding for their classroom. We can run a logistic regression model in which the word vectors are the predictors, and the classroom funding is the response. For this model to work, there are two underlying assumptions. First, we assume that teachers who write a “good” essay will get funding, while “bad”&quot; essays will not get funding. Second, we assume that the word vectors will be able to capture the essence of a “good” essay.</p>
 <p>Let’s load up the glmnet package, which is great for running a quick lasso regression. How does the model do?</p>
 <pre class="r"><code>library(glmnet)
 glmnet_classifier = cv.glmnet(x = sumVecs, y = df$project_is_approved,
@@ -234,7 +234,7 @@ plot(glmnet_classifier)</code></pre>
 <img src="/images/word_vectors_AUC.jpeg" width="750" />
 
 </div>
-<p>Hey, not bad! We got an AUC of almost 0.70 using the essays only. That means that (1) the quality of the teacher essays was captured by the word vectors and (2) the word vectors can accurately predict whether or not a teacher’s essay was good enough to get funded. Pretty cool!</p>
+<p>Hey, not bad! We got an AUC of almost 0.70 using the essays alone. That means that (1) the quality of the teacher essays was captured by the word vectors and (2) the word vectors can accurately predict whether or not a teacher’s essay was good enough to get funded. Pretty cool!</p>
 <div class="figure">
 <img src="/images/sweet.jpg" width="750" />
 
@@ -251,7 +251,7 @@ plot(glmnet_classifier)</code></pre>
         <div class="pagination__buttons">
           
           
-            <a class="btn previous" href="https://jon-holt.github.io/post/how-do-teachers-describe-their-students/">How do teachers describe their students? →</a>
+            <a class="btn previous" href="/post/how-do-teachers-describe-their-students/">How do teachers describe their students? →</a>
            
         </div>
       </div>
@@ -264,7 +264,7 @@ plot(glmnet_classifier)</code></pre>
     <footer class="footer">
   <div class="footer__inner">
     
-      <a href="https://jon-holt.github.io/" style="text-decoration: none;">
+      <a href="/" style="text-decoration: none;">
   <div class="logo">
     
       <span class="logo__mark">></span>
