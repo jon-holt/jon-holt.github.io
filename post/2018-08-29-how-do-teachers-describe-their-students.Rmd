@@ -6,6 +6,7 @@ slug: how-do-teachers-describe-their-students
 categories:
   - NLP
   - multinomial regression
+  - R
 tags: []
 ---
 
