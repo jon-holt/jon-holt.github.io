@@ -2,52 +2,63 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Uninformed Prior</title>
-    <link>/</link>
+    <link>https://jon-holt.github.io/</link>
     <description>Recent content on Uninformed Prior</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jon-holt.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Using pre-trained word embeddings for prediction</title>
-      <link>/post/using-word-embeddings-to-predict-donorschoose-acceptance/</link>
+      <link>https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/</link>
       <pubDate>Wed, 24 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/using-word-embeddings-to-predict-donorschoose-acceptance/</guid>
+      <guid>https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/</guid>
       <description>Introduction In my last post I introduced the DonorsChoose dataset, which can be easily downloaded from Kaggle. This dataset is fun to play with because it has lots of natural language processing (NLP) potential. Each observation contains (among other things) essays written by classroom teachers. Just like in my last post, we’ll focus on the essays here.
 This time, we’ll explore the teacher essays using word embeddings. Word embeddings are a mathematical representation of word similarity (e.</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>/about/</link>
+      <link>https://jon-holt.github.io/about/</link>
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
-      <description>This is my website</description>
+      <guid>https://jon-holt.github.io/about/</guid>
+      <description>Hello! Thank you for visiting my website.
+I am a PhD student in the department of Civil &amp;amp; Environmental Engineering at Duke. My main research topic is the built environment and it&amp;rsquo;s relationship to the human psyche. I think about things such as the influence of suburban tree density on well-being.
+In this blog I write about interesting methods that I come across in my studies. I mainly code in R, but I use Python, too.</description>
     </item>
     
     <item>
       <title>How do teachers describe their students?</title>
-      <link>/post/how-do-teachers-describe-their-students/</link>
+      <link>https://jon-holt.github.io/post/how-do-teachers-describe-their-students/</link>
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/how-do-teachers-describe-their-students/</guid>
+      <guid>https://jon-holt.github.io/post/how-do-teachers-describe-their-students/</guid>
       <description>Introduction DonorsChoose is a popular crowd-funding website created to help teachers get the supplies they need. I first heard of the website when I was 22 years old, and teaching high school physics in New Orleans. DonorsChoose was an easy way for me to find funding for a model rocket project. Here’s a photo of me and a student (circa 2012) playing with our crowd-funded rockets:
 My student and I preparing for launch</description>
     </item>
     
     <item>
       <title>Showcase</title>
-      <link>/showcase/</link>
+      <link>https://jon-holt.github.io/showcase/</link>
       <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/showcase/</guid>
+      <guid>https://jon-holt.github.io/showcase/</guid>
       <description>Header 2 Backup two-step verification breach, anonymous terminal traffic worm virus reboot fsociety dat file. Traffic fsociety malware 100 terabytes system hack, delete brute-force cyber security fiber connection connect code worm wipe. Cyber security off the grid delete IP decrypt, nodes connect password 100 terabytes RUDY attack malicious code rootkit gigabit speed. Tor connect network, intercepting traffic off the grid IP protocol password.
  Backup DDoS attack rootkit nodes disconnect website.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://jon-holt.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://jon-holt.github.io/about/</guid>
+      <description>code{white-space: pre;} pre:not([class]) { background-color: white; }  if (window.hljs) { hljs.configure({languages: []}); hljs.initHighlightingOnLoad(); if (document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); } }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
     </item>
     
   </channel>

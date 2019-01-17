@@ -3,67 +3,71 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/post/using-word-embeddings-to-predict-donorschoose-acceptance/</loc>
+    <loc>https://jon-holt.github.io/post/using-word-embeddings-to-predict-donorschoose-acceptance/</loc>
     <lastmod>2018-10-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://jon-holt.github.io/about/</loc>
     <lastmod>2018-08-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/how-do-teachers-describe-their-students/</loc>
+    <loc>https://jon-holt.github.io/post/how-do-teachers-describe-their-students/</loc>
     <lastmod>2018-08-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/showcase/</loc>
+    <loc>https://jon-holt.github.io/showcase/</loc>
     <lastmod>2018-07-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://jon-holt.github.io/about/</loc>
+  </url>
+  
+  <url>
+    <loc>https://jon-holt.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/multinomial-regression/</loc>
+    <loc>https://jon-holt.github.io/categories/multinomial-regression/</loc>
     <lastmod>2018-08-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/nlp/</loc>
+    <loc>https://jon-holt.github.io/categories/nlp/</loc>
     <lastmod>2018-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://jon-holt.github.io/post/</loc>
     <lastmod>2018-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
+    <loc>https://jon-holt.github.io/categories/r/</loc>
     <lastmod>2018-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://jon-holt.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://jon-holt.github.io/</loc>
     <lastmod>2018-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/word-embeddings/</loc>
+    <loc>https://jon-holt.github.io/categories/word-embeddings/</loc>
     <lastmod>2018-10-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
